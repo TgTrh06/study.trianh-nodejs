@@ -4,8 +4,8 @@ import { UserService } from "../services/user.service";
 class UserController {
   static async getCreateForm(_req: Request, res: Response): Promise<void> {
     try {
-      const roleList = UserService.getAllRoles();
-      res.render("users/user-create", { roleList });    
+      const roleList = await UserService.getAllRoles();
+      res.render("users/user-create", { roles: roleList });    
     } catch (error) {}
   }
 
@@ -13,7 +13,7 @@ class UserController {
     try {
       const { name, email, password, roleId } = req.body;
 
-      UserService.createUser(name, email, password, roleId);
+      await UserService.createUser(name, email, password, roleId);
 
       res.redirect("users/user-list")
     } catch (error) {
@@ -23,7 +23,7 @@ class UserController {
   }
 
   static async getAllUsers(_req: Request, res: Response): Promise<void> {
-    const userList = UserService.getAllUsers();
+    const userList = await UserService.getAllUsers();
     console.log(userList);
     res.render("users/user-list", { users: userList });
   }

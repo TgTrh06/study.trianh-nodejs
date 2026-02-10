@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User List</title>
+</head>
+<body>
+  <h1>📋 User List</h1>
+
+  <a href="/users/create">➕ Create User</a>
+  <hr />
+
+  <% if (users.length === 0) { %>
+    <p>No users found</p>
+  <% } %>
+
+  <ul>
+    <% users.forEach(user => { %>
+      <li>
+        <strong><%= user.name %></strong>
+        - <%= user.email %>
+      </li>
+    <% }) %>
+  </ul>
+
+  <a href="/">← Back</a>
+</body>
+</html>
