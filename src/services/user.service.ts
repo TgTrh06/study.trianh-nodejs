@@ -22,8 +22,8 @@ export class UserService {
     user.email = email;
     user.password = password;
     user.role = role;
-
-    return await this.userRepository.save(user);
+    
+    await this.userRepository.save(user);
   }
 
   static async getAllUsers() {
