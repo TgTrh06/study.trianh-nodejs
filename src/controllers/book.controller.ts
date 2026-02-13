@@ -28,4 +28,10 @@ class BookController {
     console.log(bookList);
     res.render("books/book-list", { books: bookList });
   }
+
+  static async deleteBook(req: Request, res: Response) {
+    
+  }
 }
+
+export default BookController;

@@ -1,4 +1,3 @@
-import { error } from "node:console";
 import { AppDataSource } from "../models/DataSource";
 import { Author } from "../models/entities/Author.entity";
 import { Book } from "../models/entities/Book.entity";
@@ -10,7 +9,7 @@ export class BookService {
   static async createBook(
     title: string,
     publishedYear: number,
-    authorId: any,
+    authorId: number,
   ) {
     const author = await this.authorRepository.findOneBy({ id: authorId })
     if (!author) {
@@ -33,5 +32,16 @@ export class BookService {
 
   static async getAllAuthor() {
     return await this.authorRepository.find();
+  }
+
+  static async deleteBook(
+    bookId: number,
+  ) {
+    const book = await this.bookRepository.findOneBy({ id: bookId })
+    if (!book) {
+      throw new Error("Book not found.");
+    }
+    
+    await this.bookRepository.delete(book);
   }
 }
