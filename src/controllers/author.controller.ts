@@ -21,7 +21,7 @@ class AuthorController {
     }
   }
 
-  static async getAllAuthor(_req: Request, res: Response) {
+  static async getAllAuthors(_req: Request, res: Response) {
     const authorList = await AuthorService.getAllAuthor();
     console.log(authorList);
     res.render("authors/author-list", { authors: authorList });
