@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book List</title>
+</head>
+<body>
+  <h1>📋 Book List</h1>
+
+  <a href="/books/create">➕ Create Book</a>
+  <hr />
+
+  <% if (books.length === 0) { %>
+    <p>No books found</p>
+  <% } %>
+
+  <ul>
+    <% books.forEach(book => { %>
+      <li>
+        <strong><%= book.title %></strong>
+        - <%= book.author?.name %>
+      </li>
+    <% }) %>
+  </ul>
+
+  <a href="/">← Back</a>
+</body>
+</html>

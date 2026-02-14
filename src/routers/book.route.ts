@@ -17,6 +17,6 @@ router.post("/create", BookController.createBook);
 router.get("/", BookController.getAllBooks);
 
 // DELETE
-router.delete("/delete/:id", )
+router.delete("/delete/:id", BookController.deleteBook);
 
 export default router;
