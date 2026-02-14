@@ -1,6 +1,7 @@
 import { AppDataSource } from "../models/DataSource";
 import { Author } from "../models/entities/Author.entity";
 import { Book } from "../models/entities/Book.entity";
+import { ServiceResponse } from "../utils/Types";
 
 export class BookService {
   private static bookRepository = AppDataSource.getRepository(Book);
@@ -10,38 +11,49 @@ export class BookService {
     title: string,
     publishedYear: number,
     authorId: number,
-  ) {
-    const author = await this.authorRepository.findOneBy({ id: authorId })
-    if (!author) {
-      throw new Error("Author not found.");
+  ): Promise<ServiceResponse<Book>> {
+    try {
+      const author = await this.authorRepository.findOneBy({ id: authorId });
+      if (!author) {
+        return { success: false, message: "Author not found." };
+      }
+  
+      const book = new Book();
+      book.title = title;
+      book.publishedYear = publishedYear;
+      book.author = author;
+  
+      await this.bookRepository.save(book);
+
+      return { success: true, data: book, message: "Book created succesfully."};
+    } catch (error: any) {
+      return { success: true, message: `Created failed: ${error.message}`};
     }
-
-    const book = new Book();
-    book.title = title;
-    book.publishedYear = publishedYear;
-    book.author = author;
-    
-    await this.bookRepository.save(book);
   }
 
-  static async getAllBook() {
-    return await this.bookRepository.find({
-      relations: ["author"],
-    });
-  }
-
-  static async getAllAuthor() {
-    return await this.authorRepository.find();
-  }
-
-  static async deleteBook(
-    bookId: number,
-  ) {
-    const book = await this.bookRepository.findOneBy({ id: bookId })
-    if (!book) {
-      throw new Error("Book not found.");
+  static async getAllBook(): Promise<ServiceResponse<Book[]>> {
+    try {
+      const books = await this.bookRepository.find({
+        relations: ["author"],
+      });
+      return { success: true, data: books, message: "Books has been fetched successfully." };
+    } catch (error) {
+      return { success: false, message: `Could not fetch books: ${error}` }
     }
-    
-    await this.bookRepository.delete(book);
+  }
+
+  static async deleteBook(bookId: number): Promise<ServiceResponse<void>> {
+    try {
+      const result = await this.bookRepository.delete(bookId);
+  
+      // No column has been deleted => Id does not exist
+      if (result.affected === 0) {
+        return { success: false, message: "Book not found." };
+      }
+  
+      return { success: true, message: "Book deleted successfully." };
+    } catch (error: any) {
+      return { success: false, message: `Deleted failed: ${error.message}` };
+    }
   }
 }
