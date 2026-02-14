@@ -1,7 +1,7 @@
 import { AppDataSource } from "../models/DataSource";
 import { Author } from "../models/entities/Author.entity";
 import { Book } from "../models/entities/Book.entity";
-import { ServiceResponse } from "../utils/Types";
+import { ServiceResponse } from "../utils/types/common";
 
 export class BookService {
   private static bookRepository = AppDataSource.getRepository(Book);
