@@ -6,7 +6,7 @@ class BookController {
   static async getCreateForm(_req: Request, res: Response) {
     try {
       const authorList = await AuthorService.getAllAuthor();
-      res.render("books/book-create", { authors: authorList });
+      res.render("books/book-create", { authors: authorList.data });
     } catch (error) {}
   }
 
@@ -30,7 +30,14 @@ class BookController {
   }
 
   static async deleteBook(req: Request, res: Response) {
+    const { id } = req.params;
     
+    const result = await BookService.deleteBook(Number(id));
+    if (!result.success) {
+      return res.status(400).send(result.message);
+    }
+
+    res.redirect("books/book-list")
   }
 }
 

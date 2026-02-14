@@ -17,17 +17,21 @@ export class BookService {
       if (!author) {
         return { success: false, message: "Author not found." };
       }
-  
+
       const book = new Book();
       book.title = title;
       book.publishedYear = publishedYear;
       book.author = author;
-  
+
       await this.bookRepository.save(book);
 
-      return { success: true, data: book, message: "Book created succesfully."};
+      return {
+        success: true,
+        data: book,
+        message: "Book created succesfully.",
+      };
     } catch (error: any) {
-      return { success: true, message: `Created failed: ${error.message}`};
+      return { success: true, message: `Created failed: ${error.message}` };
     }
   }
 
@@ -36,24 +40,45 @@ export class BookService {
       const books = await this.bookRepository.find({
         relations: ["author"],
       });
-      return { success: true, data: books, message: "Books has been fetched successfully." };
+      return {
+        success: true,
+        data: books,
+        message: "Books has been fetched successfully.",
+      };
     } catch (error) {
-      return { success: false, message: `Could not fetch books: ${error}` }
+      return { success: false, message: `Could not fetch books: ${error}` };
+    }
+  }
+
+  static async updateBook(
+    bookId: number,
+    updateData: Partial<Book>,
+  ): Promise<ServiceResponse<void>> {
+    try {
+      const result = await this.bookRepository.update(bookId, updateData);
+
+      if (result.affected === 0) {
+        return { success: false, message: "Book has not been updated" };
+      }
+
+      return { success: true, message: "Updated successfully." };
+    } catch (error: any) {
+      return { success: false, message: `Failed to update: ${error.message}` };
     }
   }
 
   static async deleteBook(bookId: number): Promise<ServiceResponse<void>> {
     try {
       const result = await this.bookRepository.delete(bookId);
-  
+
       // No column has been deleted => Id does not exist
       if (result.affected === 0) {
         return { success: false, message: "Book not found." };
       }
-  
+
       return { success: true, message: "Book deleted successfully." };
     } catch (error: any) {
-      return { success: false, message: `Deleted failed: ${error.message}` };
+      return { success: false, message: `Failed to delete: ${error.message}` };
     }
   }
 }
