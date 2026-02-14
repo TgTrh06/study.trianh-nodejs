@@ -17,6 +17,10 @@ export class AuthorService {
   }
 
   static async getAllAuthor() {
-    return await this.authorRepository.find();
+    const authors = await this.authorRepository.find();
+    if (!authors) {
+      return { success: false };
+    }
+    return { success: true, data: authors };
   }
 }

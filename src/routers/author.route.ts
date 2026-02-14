@@ -12,6 +12,6 @@ router.get("/create", AuthorController.getCreateForm);
 router.post("/create", AuthorController.createAuthor);
 
 // GET ALL
-router.get("/", AuthorController.getAllAuthor);
+router.get("/", AuthorController.getAllAuthors);
 
 export default router;
