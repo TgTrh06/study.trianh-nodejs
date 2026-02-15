@@ -40,6 +40,11 @@ export class BookService {
       const books = await this.bookRepository.find({
         relations: ["author"],
       });
+      
+      if (!books) {
+        return { success: false, message: "No book has been found." };
+      }
+
       return {
         success: true,
         data: books,
