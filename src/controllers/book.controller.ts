@@ -26,7 +26,7 @@ class BookController {
   static async getAllBooks(_req: Request, res: Response) {
     const bookList = await BookService.getAllBook();
     console.log(bookList);
-    res.render("books/book-list", { books: bookList });
+    res.render("books/book-list", { books: bookList.data });
   }
 
   static async deleteBook(req: Request, res: Response) {
