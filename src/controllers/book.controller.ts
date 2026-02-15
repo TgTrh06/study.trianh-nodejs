@@ -16,7 +16,7 @@ class BookController {
 
       await BookService.createBook(title, publishedYear, authorId);
 
-      res.redirect("books/book-list");
+      res.redirect("/books");
     } catch (error) {
       console.log(error);
       res.status(500).send("Error creating book.");
@@ -37,7 +37,7 @@ class BookController {
       return res.status(400).send(result.message);
     }
 
-    res.redirect("books/book-list")
+    res.redirect("/books")
   }
 }
 
