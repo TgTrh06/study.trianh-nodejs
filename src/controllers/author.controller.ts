@@ -12,9 +12,11 @@ class AuthorController {
     try {
       const { name, biography } = req.body;
 
-      await AuthorService.createAuthor(name, biography);
+      const result = await AuthorService.createAuthor(name, biography);
 
-      res.redirect("authors/author-list");
+      console.log(result.data);
+
+      res.redirect("/authors");
     } catch (error) {
       console.log(error);
       res.status(500).send("Error creating author.");
@@ -24,7 +26,7 @@ class AuthorController {
   static async getAllAuthors(_req: Request, res: Response) {
     const authorList = await AuthorService.getAllAuthor();
     console.log(authorList);
-    res.render("authors/author-list", { authors: authorList });
+    res.render("authors/author-list", { authors: authorList.data });
   }
 }
 
