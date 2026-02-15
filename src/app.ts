@@ -1,9 +1,6 @@
 import express from "express";
 import path from "path";
-import userRoute from "./routers/user.route";
-import authorRoute from "./routers/author.route";
-import bookRoute from "./routers/book.route";
-import homeRoute from "./routers/web.route";
+import WebRoute from "./routers/web.route";
 
 const app = express();
 
@@ -19,10 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Send form data
 
 // routes
-app.use("/", homeRoute);
-
-app.use("/users", userRoute);
-app.use("/authors", authorRoute)
-app.use("/books", bookRoute)
+app.use(WebRoute);
 
 export default app;
