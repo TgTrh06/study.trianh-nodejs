@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Author List</title>
+</head>
+<body>
+  <h1>📋 Author List</h1>
+
+  <a href="/authors/create">➕ Add Author</a>
+  <hr />
+
+  <% if (authors.length === 0) { %>
+    <p>No authors found</p>
+  <% } %>
+
+  <ul>
+    <% authors.forEach(author => { %>
+      <li>
+        <strong><%= author.name %></strong>
+        - <%= author.biography %>
+      </li>
+    <% }) %>
+  </ul>
+
+  <a href="/">← Back</a>
+</body>
+</html>

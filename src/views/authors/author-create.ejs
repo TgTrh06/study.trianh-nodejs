@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Author</title>
+</head>
+<body>
+  <h1>➕ Create Author</h1>
+
+  <form action="/authors/create" method="POST">
+    <div>
+      <label>Name</label><br />
+      <input type="text" name="name" required />
+    </div>
+
+    <div>
+      <label>Biography</label><br />
+      <input type="text" name="biography" />
+    </div>
+
+    <button type="submit">Create</button>
+  </form>
+
+  <br />
+  <a href="/authors">← Back to list</a>
+</body>
+</html>
